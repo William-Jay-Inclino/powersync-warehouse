@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  dev-db:
+    image: postgres:16
+    ports:
+      - 5434:5432
+    environment:
+      NODE_ENV: development
+      POSTGRES_USER: jay
+      POSTGRES_PASSWORD: jay123
+      POSTGRES_DB: leyeco_warehouse_db
+    networks:
+      - leyeco-warehouse-network
+  test-db:
+    image: postgres:16
+    ports:
+      - 5435:5432
+    environment:
+      POSTGRES_USER: jay
+      POSTGRES_PASSWORD: jay123
+      POSTGRES_DB: leyeco_warehouse_db
+    networks:
+      - leyeco-warehouse-network
+networks:
+  leyeco-warehouse-network:

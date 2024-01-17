@@ -1,0 +1,138 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Supplier {
+  id: String!
+  name: String!
+  contact: String!
+  supplier_items: [SupplierItem!]!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type SupplierItem {
+  id: String!
+  item_id: String!
+  item: Item!
+  supplier_id: String!
+  supplier: Supplier!
+  price: Float!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Brand {
+  id: String!
+  name: String!
+}
+
+type Unit {
+  id: String!
+  name: String!
+}
+
+type Item {
+  id: String!
+  description: String!
+  brand_id: String
+  brand: Brand
+  unit_id: String!
+  unit: Unit!
+  quantity: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  supplier_items: [SupplierItem!]
+}
+
+type CanvassItem {
+  id: String!
+  canvass_id: String!
+  canvass: Canvass!
+  item_id: String!
+  item: Item!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Department {
+  id: String!
+  code: String!
+  name: String!
+  status: Int!
+  employees: [Employee!]!
+}
+
+type Employee {
+  id: String!
+  employee_number: String!
+  firstname: String!
+  middlename: String!
+  lastname: String!
+  department_id: String!
+  department: Department!
+}
+
+type Canvass {
+  id: String!
+  rc_number: String!
+  date_requested: String!
+  purpose: String!
+  notes: String!
+  requested_by_id: String!
+  requested_by: Employee!
+  noted_by_id: String!
+  noted_by: Employee!
+  canvass_items: [CanvassItem!]!
+  is_referenced: Boolean!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type RemoveResponse {
+  success: Boolean!
+  msg: String!
+}
+
+type Query {
+  canvasses: [Canvass!]!
+  canvass(id: String!): Canvass!
+  rc_number: String!
+}
+
+type Mutation {
+  createCanvass(input: CreateCanvassInput!): Canvass!
+  updateCanvass(id: String!, input: UpdateCanvassInput!): Canvass!
+  removeCanvass(id: String!): RemoveResponse!
+}
+
+input CreateCanvassInput {
+  rc_number: String!
+  date_requested: String!
+  purpose: String!
+  notes: String
+  requested_by_id: String!
+  noted_by_id: String!
+  items: [CreateItemInput!]!
+}
+
+input CreateItemInput {
+  description: String!
+  brand_id: String
+  unit_id: String!
+  quantity: Int!
+}
+
+input UpdateCanvassInput {
+  date_requested: String
+  purpose: String
+  notes: String
+  requested_by_id: String
+  noted_by_id: String
+  items: [CreateItemInput!]
+}
